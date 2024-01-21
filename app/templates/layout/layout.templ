@@ -1,0 +1,57 @@
+package layout 
+
+templ Layout(component templ.Component) {
+	<html lang="en" class="">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Document</title>
+			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+			<script>
+				const html = document.getElementsByTagName('html')[0];
+				html.classList.toggle('dark', localStorage.getItem('darkMode') === 'true');
+				function toggleDarkMode() {
+					html.classList.toggle('dark');
+					localStorage.setItem('darkMode', html.classList.contains('dark'));
+				}
+				window.toggleDarkMode = toggleDarkMode;
+				document.addEventListener('DOMContentLoaded', (event) => {
+						const darkModeButton = document.getElementById('darkmode-button')
+						const setDarkModeText = () => {
+								const darkMode = window.localStorage.getItem("darkMode")
+								if (darkMode === "true") {
+										darkModeButton.innerText = "Disable dark mode"
+								} else {
+										darkModeButton.innerText = "Enable dark mode"
+								}
+						}
+						setDarkModeText()
+						darkModeButton.onclick = () => {
+								toggleDarkMode()
+								setDarkModeText()
+						}
+				});
+			</script>
+			<link href="/static/output.css" rel="stylesheet"/>
+		</head>
+		<body>
+			<div class="w-screen min-h-full h-max dark:bg-gray-800 bg-white py-12 overflow-x-hidden bg-gradient-to-t from-gray-100 dark:from-gray-900">
+				<div class="flex flex-col gap-2 items-center pb-8">
+					<p class="text-6xl mb-2 font-bold dark:text-white text-center">Welcome to your HTMX-Go app</p>
+					<div class="flex items-center gap-2">
+						<a
+							href="/"
+							type="button"
+							class="w-fit border-blue-600 border bg-blue-500 text-white rounded-md hover:bg-blue-600 px-2 py-1"
+						>Home</a>
+						<button
+							class="w-fit border-blue-600 border bg-blue-500 text-white rounded-md hover:bg-blue-600 px-2 py-1"
+							id="darkmode-button"
+						></button>
+					</div>
+				</div>
+				@component
+			</div>
+		</body>
+	</html>
+}
