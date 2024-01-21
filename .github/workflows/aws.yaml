@@ -6,8 +6,8 @@ on:
       - main 
 
 env:
-  AWS_REGION: 'us-east-1' # e.g., us-east-1
-  INSTANCE_ID: 'i-0ccc30222b0b4ff2b' # e.g., i-1234567890abcdef0
+  AWS_REGION: 'us-east-1' 
+  INSTANCE_ID: 'i-0ccc30222b0b4ff2b'
 
 jobs:
   start-ec2-instance:
