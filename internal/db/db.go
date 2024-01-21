@@ -11,34 +11,33 @@ import (
 	"github.com/joho/godotenv"
 )
 
-
-var db * sql.DB
+var db *sql.DB
 
 func InitDB() {
 	err := godotenv.Load(".env")
 	if err != nil {
-			log.Fatal("Error loading .env file", err)
+		log.Fatal("Error loading .env file", err)
 	}
 
 	// Initialize a new connection object to database
 	cfg := mysql.Config{
-		User:  	os.Getenv("DB_USER"),
-		Passwd: os.Getenv("DB_PASSWORD"), 
-		Net:    "tcp",
-		Addr:   "127.0.0.1:" + os.Getenv("DB_PORT"), 
-		DBName: os.Getenv("DB_NAME"),
+		User:                 os.Getenv("DB_USER"),
+		Passwd:               os.Getenv("DB_PASSWORD"),
+		Net:                  "tcp",
+		Addr:                 os.Getenv("DB_HOST") + os.Getenv("DB_PORT"),
+		DBName:               os.Getenv("DB_NAME"),
 		AllowNativePasswords: true,
 	}
 
 	// Get a database handle.
 	db, err = sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 
 	pingErr := db.Ping()
 	if pingErr != nil {
-			log.Fatal(pingErr)
+		log.Fatal(pingErr)
 	}
 	fmt.Println("Database Connected Successfully on port 8889...")
 }
