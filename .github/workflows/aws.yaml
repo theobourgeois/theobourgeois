@@ -1,4 +1,4 @@
-name: Start EC2 Instance on Push
+name: Start EC2 Instance 
 
 on:
   push:
