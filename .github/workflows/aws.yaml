@@ -1,0 +1,28 @@
+name: Start EC2 Instance on Push
+
+on:
+  push:
+    branches:
+      - main 
+
+env:
+  AWS_REGION: 'us-east-1' # e.g., us-east-1
+  INSTANCE_ID: 'i-0ccc30222b0b4ff2b' # e.g., i-1234567890abcdef0
+
+jobs:
+  start-ec2-instance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Start EC2 Instance
+        run: aws ec2 start-instances --instance-ids ${{ env.INSTANCE_ID }}
