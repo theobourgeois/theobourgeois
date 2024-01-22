@@ -12,6 +12,10 @@ db-up:
 		echo "Executed $$file"; \
 	done
 
+gen:
+	npx tailwindcss -i ./styles/input.css -o ./static/output.css
+	templ generate
+
 run-gen:
 	npx tailwindcss -i ./styles/input.css -o ./static/output.css
 	templ generate
@@ -21,8 +25,6 @@ run:
 	go run internal/main/main.go
 
 build:
-	npx tailwindcss -i ./styles/input.css -o ./static/output.css
-	templ generate
 	go build -o out internal/main/main.go
 
 clean: 
