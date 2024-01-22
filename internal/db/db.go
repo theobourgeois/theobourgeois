@@ -24,7 +24,7 @@ func InitDB() {
 		User:                 os.Getenv("DB_USER"),
 		Passwd:               os.Getenv("DB_PASSWORD"),
 		Net:                  "tcp",
-		Addr:                 os.Getenv("DB_HOST") + os.Getenv("DB_PORT"),
+		Addr:                 os.Getenv("DB_HOST") + ":" + os.Getenv("DB_PORT"),
 		DBName:               os.Getenv("DB_NAME"),
 		AllowNativePasswords: true,
 	}

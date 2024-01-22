@@ -40,6 +40,6 @@ jobs:
             git pull origin main
             cd ..
             ./scripts/deploy.sh
-        EOF
+          EOF
 
 

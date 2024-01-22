@@ -23,7 +23,7 @@ run:
 build:
 	npx tailwindcss -i ./styles/input.css -o ./static/output.css
 	templ generate
-	go build internal/main/main.go
+	go build -o out internal/main/main.go
 
 clean: 
 	go tidy
