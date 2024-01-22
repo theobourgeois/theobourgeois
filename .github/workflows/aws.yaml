@@ -24,6 +24,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          echo "hello world"
           ssh-keyscan -H ec2-18-226-177-152.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
           echo "hello world"
           ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@ec2-18-226-177-152.us-east-2.compute.amazonaws.com << 'EOF'
