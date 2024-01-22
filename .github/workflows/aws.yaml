@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: 'us-east-2' 
   INSTANCE_ID: 'i-0ccc30222b0b4ff2b'
-  
+
 jobs:
   start-ec2-instance:
     runs-on: ubuntu-latest
@@ -17,23 +17,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2 # Replace with your AWS region
-
-      - name: Start EC2 Instance
-        id: start-instance
-        run: |
-          aws ec2 start-instances --instance-ids ${{ env.INSTANCE_ID }}
-        continue-on-error: true
-
-      - name: Check for Error
-        if: steps.start-instance.outcome == 'failure'
-        run: echo "Failed to start instance. Check AWS permissions and instance details."
-      
       - name: Deploy to EC2
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
