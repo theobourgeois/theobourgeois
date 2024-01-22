@@ -8,7 +8,7 @@ DB_HOST := $(shell grep "DB_HOST" .env | cut -d '=' -f2)
 
 db-up:
 	@for file in database/migrations/*.sql ; do \
-		mysql -u$(DB_USER) -p'$(DB_PASSWORD)' -h ${DB_HOST} --port ${DB_PORT} $(DB_NAME) < $$file; \
+		mysql -u$(DB_USER) -p$(DB_PASSWORD) -h ${DB_HOST} --port ${DB_PORT} $(DB_NAME) < $$file; \
 		echo "Executed $$file"; \
 	done
 
