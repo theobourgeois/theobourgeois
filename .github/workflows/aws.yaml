@@ -26,5 +26,15 @@ jobs:
       - name: Check for Error
         if: steps.start-instance.outcome == 'failure'
         run: echo "Failed to start instance. Check AWS permissions and instance details."
+      
+      - name: Deploy to EC2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ec2-18-226-200-84.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@ec2-18-226-200-84.us-east-2.compute.amazonaws.com 'bash -s' < ./scripts/deploy.sh
 
 
