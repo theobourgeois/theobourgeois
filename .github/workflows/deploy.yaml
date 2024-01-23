@@ -14,6 +14,8 @@ jobs:
     - name: Build and Prepare Files
       run: |
         go build -o out .
+        scp -o StrictHostKeyChecking=no -i private_key out database/migrations/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/deploy
+        ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < deploy.sh
         # Any other commands to prepare migration files
     - name: Deploy to server
       uses: appleboy/ssh-action@master
@@ -22,6 +24,5 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          scp -o StrictHostKeyChecking=no -i private_key out database/migrations/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/deploy
-          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < deploy.sh
+          ./deploy.sh
 
