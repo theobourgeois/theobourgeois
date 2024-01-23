@@ -20,5 +20,5 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          scp out database/migrations/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/deploy
-          ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < deploy/deploy.sh
+          scp -o StrictHostKeyChecking=no out database/migrations/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/deploy
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < deploy/deploy.sh
