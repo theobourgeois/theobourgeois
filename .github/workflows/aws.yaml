@@ -21,9 +21,11 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -o TCPKeepAlive=yes -o ServerAliveInterval=60 -vvv -i ~/.ssh/id_rsa ec2-user@ec2-18-226-177-152.us-east-2.compute.amazonaws.com echo "SSH Success"
-
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@ec2-18-226-177-152.us-east-2.compute.amazonaws.com << 'EOF'
+            cd theobourgeois 
+            git pull origin main
+            ../scripts/deploy.sh
+          EOF
