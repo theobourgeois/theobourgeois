@@ -16,8 +16,8 @@ jobs:
         go build -o out .
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
         chmod 600 private_key
-        scp -o StrictHostKeyChecking=no -i private_key -r database static ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/deploy
-        scp -o StrictHostKeyChecking=no -i private_key out ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/deploy
+        scp -o StrictHostKeyChecking=no -i private_key -r database static ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:deploy
+        scp -o StrictHostKeyChecking=no -i private_key out ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:deploy
         ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} './deploy.sh'
     - name: Deploy to server
       uses: appleboy/ssh-action@master
