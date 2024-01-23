@@ -20,6 +20,5 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          echo "secret key: ${{ secrets.SSH_PRIVATE_KEY }}"
-          scp -o StrictHostKeyChecking=no out database/migrations/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/deploy
+          scp -o StrictHostKeyChecking=no out database/migrations/* ec2-user@ec2-18-226-177-152.us-east-2.compute.amazonaws.:/deploy
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < deploy/deploy.sh
