@@ -9,10 +9,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
     - name: Build Go binary
-      run: | 
-        ls
-        go build -o out .
+      run: go build -o out .
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
