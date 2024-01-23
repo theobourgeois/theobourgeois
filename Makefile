@@ -19,13 +19,13 @@ gen:
 run-gen:
 	npx tailwindcss -i ./styles/input.css -o ./static/output.css
 	templ generate
-	go run internal/main/main.go
+	go run .
 
 run: 
-	go run internal/main/main.go
+	go run .
 
 build:
-	go build -o out internal/main/main.go
+	go build -o out . 
 
 clean: 
 	go tidy
