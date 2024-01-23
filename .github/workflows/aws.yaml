@@ -24,7 +24,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          echo "Host ec2-18-226-177-152.us-east-2.compute.amazonaws.com"
           ssh-keyscan -H ec2-18-226-177-152.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
-          ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@ec2-18-226-177-152.us-east-2.compute.amazonaws.com echo "SSH Test Successful"
-
+          ssh -vvv -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@ec2-18-226-177-152.us-east-2.compute.amazonaws.com << 'EOF'
+            cd theobourgeois 
+            git pull origin main
+            cd ..
+            ./scripts/deploy.sh
+          EOF
