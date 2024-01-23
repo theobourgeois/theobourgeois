@@ -11,8 +11,10 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
-    - name: Build Go binary
-      run: go build -o out .
+    - name: Build and Prepare Files
+      run: |
+        go build -o out .
+        # Any other commands to prepare migration files
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
@@ -20,9 +22,6 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
-          chmod 600 private_key
-          ls -la
           scp -o StrictHostKeyChecking=no -i private_key out database/migrations/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:/deploy
           ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < deploy.sh
 
