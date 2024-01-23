@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Build Go binary
-      run: go build -o out .
+      run: | 
+        ls
+        go build -o out .
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
