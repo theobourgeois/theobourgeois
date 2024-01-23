@@ -17,7 +17,7 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
         chmod 600 private_key
         scp -o StrictHostKeyChecking=no -i private_key out database/migrations/* ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:deploy
-        ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < deploy.sh
+        ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'bash -s' < ./deploy.sh
     - name: Deploy to server
       uses: appleboy/ssh-action@master
       with:
