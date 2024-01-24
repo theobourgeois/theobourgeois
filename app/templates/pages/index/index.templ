@@ -1,12 +1,5 @@
 package index
 
-import "theobourgeois.com/app/templates/components/postcomps"
-
 templ Index() {
-	<div class="flex flex-col gap-4 justify-center mx-auto w-3/4">
-		@postcomps.CreatePost()
-		<div id="posts" hx-get="/api/posts" hx-trigger="load">
-			<p class="text-2xl dark:text-white text-center">Loading posts...</p>
-		</div>
-	</div>
+	<div class="flex flex-col gap-4 justify-center mx-auto w-3/4"></div>
 }
